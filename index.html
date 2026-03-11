@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>Calculadora de Comissão</title>
+
+<style>
+
+body{
+font-family:Arial;
+max-width:400px;
+margin:auto;
+padding:20px;
+background:#f5f5f5;
+}
+
+h2{
+text-align:center;
+}
+
+input,button{
+width:100%;
+padding:12px;
+margin-top:10px;
+font-size:16px;
+}
+
+button{
+background:#000;
+color:white;
+border:none;
+border-radius:6px;
+}
+
+.result{
+background:white;
+padding:15px;
+margin-top:15px;
+border-radius:8px;
+}
+
+</style>
+</head>
+
+<body>
+
+<h2>Calculadora de Comissão</h2>
+
+<label>Valor do imóvel</label>
+<input type="number" id="valor">
+
+<label>Imposto (%)</label>
+<input type="number" id="imposto" value="27.5">
+
+<button onclick="calcular()">Calcular</button>
+
+<div class="result" id="resultado"></div>
+
+<script>
+
+function moeda(v){
+return v.toLocaleString('pt-BR',{style:'currency',currency:'BRL'});
+}
+
+function calcular(){
+
+let valor = parseFloat(document.getElementById("valor").value);
+let imposto = parseFloat(document.getElementById("imposto").value)/100;
+
+let comissaoTotal = valor*0.06;
+let liquidoCliente = valor-comissaoTotal;
+
+let imobiliaria1 = comissaoTotal*0.55;
+let corretor1 = comissaoTotal*0.45;
+let imposto1 = corretor1*imposto;
+let liquido1 = corretor1-imposto1;
+
+let comissaoParceria = valor*0.03;
+let imobiliaria2 = comissaoParceria*0.55;
+let corretor2 = comissaoParceria*0.45;
+let imposto2 = corretor2*imposto;
+let liquido2 = corretor2-imposto2;
+
+document.getElementById("resultado").innerHTML = `
+
+<h3>Cliente</h3>
+Liquido cliente: ${moeda(liquidoCliente)}
+
+<h3>Captei e vendi</h3>
+
+Comissão total: ${moeda(comissaoTotal)}<br>
+Imobiliária: ${moeda(imobiliaria1)}<br>
+Corretor bruto: ${moeda(corretor1)}<br>
+Imposto: ${moeda(imposto1)}<br>
+<strong>Líquido corretor: ${moeda(liquido1)}</strong>
+
+<h3>Venda em parceria</h3>
+
+Comissão: ${moeda(comissaoParceria)}<br>
+Imobiliária: ${moeda(imobiliaria2)}<br>
+Corretor bruto: ${moeda(corretor2)}<br>
+Imposto: ${moeda(imposto2)}<br>
+<strong>Líquido corretor: ${moeda(liquido2)}</strong>
+
+`;
+
+}
+
+</script>
+
+</body>
+</html>
